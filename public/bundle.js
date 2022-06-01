@@ -363,7 +363,7 @@ eval("\n/**\n * Module exports.\n */\n\nmodule.exports = deprecate;\n\n/**\n * M
   \********************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-eval("const openCamera = __webpack_require__(/*! ./openStream */ \"./src/openStream.js\")\nconst Peer = __webpack_require__(/*! simple-peer */ \"./node_modules/simple-peer/index.js\")\n\n// openCamera()\n\nconst $ = __webpack_require__(/*! jquery */ \"./node_modules/jquery/dist/jquery.js\")\n\nconst p = new Peer({ initiator: location.hash === '#1', trickle: false })\n\np.on('error', err => console.log('error', err))\n\np.on('signal', token => {\n  console.log(token);\n  $(\"#txtMySignal\").val(JSON.stringify(token))\n})\n\np.on('connect', () => {\n  console.log('connected')\n  setInterval(() => p.send(Math.random()), 2000)\n})\n\np.on('data', data => {\n  // got a data channel message\n  console.log('NHAN DU LIEU: ' + data)\n})\n\n$('#btnConnect').on('click', () => {\n  console.log('cclicked')\n  const friendSignal = JSON.parse($(\"#txtFriendSignal\").val())\n  console.log(friendSignal)\n  p.signal(friendSignal)\n})\n\n\nconsole.log('huhhu')\n\n\n//# sourceURL=webpack://try-stream/./src/app.js?");
+eval("const openStream = __webpack_require__(/*! ./openStream */ \"./src/openStream.js\")\n\nopenStream()\n\n\nconsole.log('huhhu')\n\n\n//# sourceURL=webpack://try-stream/./src/app.js?");
 
 /***/ }),
 
@@ -373,7 +373,7 @@ eval("const openCamera = __webpack_require__(/*! ./openStream */ \"./src/openStr
   \***************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-eval("const playVideo = __webpack_require__(/*! ./playVideo */ \"./src/playVideo.js\")\n\nfunction openCamera() {\n  navigator.mediaDevices.getUserMedia({\n    audio: false,\n    video: true\n  }).then(function(stream) {\n    playVideo(stream, 'localStream')\n  });\n}\n\nmodule.exports = openCamera\n\n//# sourceURL=webpack://try-stream/./src/openStream.js?");
+eval("const playVideo = __webpack_require__(/*! ./playVideo */ \"./src/playVideo.js\");\nconst Peer = __webpack_require__(/*! simple-peer */ \"./node_modules/simple-peer/index.js\")\nconst $ = __webpack_require__(/*! jquery */ \"./node_modules/jquery/dist/jquery.js\")\n\nfunction openCamera() {\n  navigator.mediaDevices\n    .getUserMedia({\n      audio: false,\n      video: true,\n    })\n    .then(function (stream) {\n      playVideo(stream, \"localStream\");\n\n      const p = new Peer({ initiator: location.hash === \"#1\", trickle: false, stream });\n\n      p.on(\"signal\", (token) => {\n        $(\"#txtMySignal\").val(JSON.stringify(token));\n      });\n\n      $(\"#btnConnect\").on(\"click\", () => {\n        const friendSignal = JSON.parse($(\"#txtFriendSignal\").val());\n        p.signal(friendSignal);\n      });\n\n      p.on(\"stream\", (stream) => {\n        playVideo(stream, \"friendStream\");\n      });\n    });\n}\n\nmodule.exports = openCamera;\n\n\n//# sourceURL=webpack://try-stream/./src/openStream.js?");
 
 /***/ }),
 
