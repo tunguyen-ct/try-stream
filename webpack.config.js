@@ -1,16 +1,16 @@
-const path = require('path');
-const webpack = require('webpack')
+const path = require("path");
+const webpack = require("webpack");
 
 module.exports = {
-  entry: './src/app.js',
-  mode: "development",
+  entry: "./src/app.js",
+  mode: "production",
   output: {
-    path: path.resolve(__dirname, 'public'),
-    filename: 'bundle.js',
+    path: path.resolve(__dirname, "public"),
+    filename: "bundle.js",
   },
   plugins: [
     new webpack.ProvidePlugin({
-      process: 'process/browser',
-    }) 
-]
+      process: "process/browser",
+    }),
+  ],
 };

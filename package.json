@@ -5,6 +5,7 @@
   "author": "tunguyen-ct",
   "license": "MIT",
   "scripts": {
+    "start": "node index.js",
     "build": "webpack",
     "build:watch": "webpack --watch",
     "dev": "nodemon index.js"
